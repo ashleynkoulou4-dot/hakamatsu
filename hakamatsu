@@ -1,0 +1,59 @@
+# fichier: hakamatsu/main.py
+
+import random
+from datetime import datetime
+
+# Exemple de base de quiz Otaku
+quiz_questions = [
+    {"q": "Qui est le protagoniste principal de One Piece ?", "a": "Luffy"},
+    {"q": "Dans Naruto, qui est le sensei de l'équipe 7 ?", "a": "Kakashi"},
+    {"q": "Quel est le nom du démon dans Demon Slayer ?", "a": "Muzan"},
+]
+
+def salutation(message: str) -> str:
+    if "bonjour" in message.lower():
+        return "Salut 👋 Bienvenue dans le groupe Hakamatsu !"
+    return None
+
+def quiz() -> str:
+    question = random.choice(quiz_questions)
+    return f"🎮 Quiz Otaku : {question['q']}"
+
+def verifier_reponse(message: str) -> str:
+    for q in quiz_questions:
+        if q["a"].lower() in message.lower():
+            return f"✅ Exact ! La réponse était bien {q['a']}."
+    return None
+
+def rappel_evenement() -> str:
+    today = datetime.now().strftime("%d/%m/%Y")
+    return f"📅 Rappel : Aujourd'hui ({today}), sortie du nouvel épisode de Jujutsu Kaisen !"
+
+# Simulation de réception de message
+def handle_message(message: str):
+    response = salutation(message)
+    if response:
+        print(response)
+        return
+
+    if "quiz" in message.lower():
+        print(quiz())
+        return
+
+    response = verifier_reponse(message)
+    if response:
+        print(response)
+        return
+
+    if "rappel" in message.lower():
+        print(rappel_evenement())
+        return
+
+    print("🤖 Je n'ai pas compris, mais je suis là pour aider !")
+
+# Exemple d'utilisation
+if __name__ == "__main__":
+    handle_message("Bonjour à tous")
+    handle_message("quiz")
+    handle_message("La réponse est Luffy")
+    handle_message("rappel")
